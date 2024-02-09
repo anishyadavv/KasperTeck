@@ -1,6 +1,6 @@
-const useLoggedin = ()=>{
+const getLoggedin = ()=>{
     if(localStorage.getItem('token'))
         return true;
     return false;
 }
-export default useLoggedin;
+export default getLoggedin;

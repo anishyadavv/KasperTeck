@@ -38,39 +38,39 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req,res) => {
-   const { email, password } = req.body;
-   let success = false;
-   try {
-     const user = await User.findOne({ email });
-     if (!user) {
-       return res.json({ success, error: "Please enter valid credintials" });
-     }
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  let success = false;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ success, error: "Please enter valid credintials" });
+    }
+    if(user.role === "customer"){
+      return res.json({ success, error: "Customer cannot login in admin panel"});
+    }
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare) {
+      return res.json({ success, error: "Please enter valid credintials" });
+    }
 
-     const passwordCompare = await bcrypt.compare(password, user.password);
-     if (!passwordCompare) {
-       return res.json({ success, error: "Please enter valid credintials" });
-     }
-
-     const data = {
-       user: {
-         id: user.id,
-       },
-     };
-     const authtoken = jwt.sign(data, JWT_SECRET);
-     success = true;
-     res.json({ success, authtoken });
-   } catch (error) {
-     console.log(error.message);
-     res.status(500).send("some error occured");
-   }
-}
-
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+    const authtoken = jwt.sign(data, JWT_SECRET);
+    success = true;
+    res.json({ success, authtoken });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("some error occured");
+  }
+};
 
 exports.registerCustomer = async (req, res) => {
   // Implementation for registering customer
   let success = false;
-
   try {
     let user = await User.findOne({ email: req.body.email });
     if (user) {
@@ -97,24 +97,31 @@ exports.registerCustomer = async (req, res) => {
     res.json({ success, authtoken });
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("some error occured");
+    res.status(500).json({ message: "some error occured" });
   }
 };
 
 exports.createDevice = async (req, res) => {
   // Implementation for creating device
+  let success = false;
   try {
     const { device_id } = req.body;
     const existingDevice = await Device.findOne({ device_id });
 
     if (existingDevice) {
-      return res.status(400).json({ message: "Device ID already exists" });
+      return res
+        .status(400)
+        .json({ message: "Device ID already exists", success: success });
     }
 
     const newDevice = new Device(req.body);
     await newDevice.save();
 
-    res.status(201).json({ message: "Device created successfully" });
+    res.status(201).json({
+      message: "Device created successfully",
+      newDevice: newDevice,
+      success: true,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -128,13 +135,15 @@ exports.assignDevice = async (req, res) => {
 
     const device = await Device.findById(device_id);
     if (!device) {
-      return res.status(404).json({ message: "Device not found" });
+      return res
+        .status(404)
+        .json({ message: "Device not found", success: false });
     }
 
     device.alloted_to_user = user_id;
     await device.save();
 
-    res.json({ message: "Device assigned successfully" });
+    res.json({ message: "Device assigned successfully", success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -149,5 +158,26 @@ exports.getAllDevices = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getAllCustomers = async (req, res) => {
+  try {
+    const customers = await User.find({ role: "customer" },'_id email');
+    res.json(customers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+exports.getCustomerDetails = async (req, res) => {
+  try {
+    const customer = await User.findById(
+      { _id: req.body.user_id },
+      "_id email"
+    );
+    res.json(customer);
+  } catch (error) {
+    console.error(error);
   }
 };

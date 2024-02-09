@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link,useNavigate } from 'react-router-dom';
-import useLoggedin from '../hooks/useLoggedin';
+import getLoggedin from '../helper/getLoggedin';
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function NavBar() {
         localStorage.removeItem('token');
         navigate("/");
     }
-    const loggedIn = useLoggedin();
+    const loggedIn = getLoggedin();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

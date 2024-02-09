@@ -7,15 +7,20 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminSignup from './pages/AdminSignup.jsx';
 import CustomerLogin from './pages/CustomerLogin.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
+import Alerts from './components/Alerts.jsx';
+import { useContext } from 'react';
+import GlobalContext from './context/GlobalContext.jsx';
 
 
 function App() {
-  
+  const context = useContext(GlobalContext);
+  const { alert } = context;
 
   return (
     <>
     <Router>
       <Navbar/>
+       {alert.show && <Alerts alert={alert}/>}
       <Routes>
         <Route path="/" element={<Home/>}>
           <Route path='/adminSignup' element={<AdminSignup/>}></Route>

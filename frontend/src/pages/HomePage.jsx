@@ -2,14 +2,14 @@ import { Button, ButtonGroup } from "@mui/material"
 import { useEffect } from "react";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import useLoggedin from "../hooks/useLoggedin";
+import getLoggedin from "../helper/getLoggedin";
 
 
 
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const loggedIn = useLoggedin();
+    const loggedIn = getLoggedin();
     useEffect(()=>{
         if(loggedIn){
             navigate('/adminDashboard');
