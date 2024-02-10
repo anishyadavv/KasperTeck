@@ -37,7 +37,6 @@ const AdminLogin = ()=> {
     const userData = await response.json();
     if(userData.success){
         localStorage.setItem('token', userData.authtoken);
-        console.log("hello");
         navigate('/adminDashboard');
     }
     else{

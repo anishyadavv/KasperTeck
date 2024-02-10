@@ -10,6 +10,7 @@ import AdminLogin from './pages/AdminLogin.jsx';
 import Alerts from './components/Alerts.jsx';
 import { useContext } from 'react';
 import GlobalContext from './context/GlobalContext.jsx';
+import CustomerDashboard from './pages/CustomerDashboard.jsx';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path='/customerLogin' element={<CustomerLogin/>}></Route>
         </Route>
         <Route path='/adminDashboard' element={<AdminDashboard/>}/>
+        <Route path='/CustomerDashboard' element={<CustomerDashboard/>}/>
       </Routes>
     </Router>
     </>

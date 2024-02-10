@@ -2,12 +2,13 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
+const fetchuser = require("../middleware/fetchuser");
 
-router.post("/registerCustomer", adminController.registerCustomer);
-router.post("/create-device", adminController.createDevice);
-router.put("/assign-device", adminController.assignDevice);
-router.get("/customers", adminController.getAllCustomers);
-router.get("/devices", adminController.getAllDevices);
+router.post("/registerCustomer", fetchuser, adminController.registerCustomer);
+router.post("/create-device",fetchuser, adminController.createDevice);
+router.put("/assign-device", fetchuser, adminController.assignDevice);
+router.get("/customers", fetchuser, adminController.getAllCustomers);
+router.get("/devices", fetchuser, adminController.getAllDevices);
 router.post("/register", adminController.signup);
 router.post("/Login", adminController.login);
 router.post("/customer-details", adminController.getCustomerDetails);

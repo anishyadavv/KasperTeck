@@ -8,7 +8,6 @@ require("dotenv").config();
 const URI = process.env.MONGOURI;
 const PORT = process.env.PORT || 5000;
 
-console.log(URI);
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());

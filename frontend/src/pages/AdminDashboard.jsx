@@ -5,7 +5,9 @@ import CreateDevice from '../components/CreateDevice';
 import RegisterCustomer from '../components/RegisterCustomer';
 import GlobalContext from '../context/GlobalContext';
 import Customers from '../components/Customers';
+import { useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const context = useContext(GlobalContext);
   const { devices,getDeviceData } = context;
   const [open, setOpen] = useState(false);
@@ -29,7 +31,11 @@ const AdminDashboard = () => {
   }
 
   useEffect(()=>{
-     getDeviceData();
+    if(!localStorage.getItem("token")){
+      navigate("/");
+    }else{
+      getDeviceData();
+    }
   },[devices])
 
   return (

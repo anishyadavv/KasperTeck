@@ -12,7 +12,13 @@ const GlobalState = (props) => {
   });
    const getDeviceData = async() => {
     try{
-      const response = await fetch("http://localhost:5000/api/admin/devices");
+      const response = await fetch("http://localhost:5000/api/admin/devices",{
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        },});
       const data = await response.json();
       setDevices(data);
     }
@@ -22,7 +28,14 @@ const GlobalState = (props) => {
   }
   const getCustomers = async() => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/customers");
+      const response = await fetch("http://localhost:5000/api/admin/customers",{
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        },
+      });
       const data = await response.json();
       setCustomers(data);
     }catch(err){
@@ -36,6 +49,7 @@ const GlobalState = (props) => {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      "auth-token": localStorage.getItem("token")
     },
     body: JSON.stringify({device_id}),
     });
@@ -77,6 +91,7 @@ const GlobalState = (props) => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token")
       },
       body: JSON.stringify({email,password}),
     });
@@ -124,6 +139,7 @@ const GlobalState = (props) => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token")
       },
       body: JSON.stringify({device_id,user_id}),
     });
