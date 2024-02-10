@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GlobalContext from '../context/GlobalContext';
 
-export default function Device({id,device_id,state,alloted_to_user,setOpenCustomersModal}) {
+export default function Device({id,device_id,state,alloted_to_user,setOpenCustomersModal,role}) {
 
   const context = React.useContext(GlobalContext);
   const { setDeviceID } = context;
@@ -37,7 +37,7 @@ export default function Device({id,device_id,state,alloted_to_user,setOpenCustom
       </Typography>
     </CardContent>
     <CardActions>
-      <Button onClick={()=>handleAllote(id)} size="small">allocate to</Button>
+      {(role!=="customer")?<Button onClick={()=>handleAllote(id)} size="small">allocate to</Button>:""}
     </CardActions>
       </Card>
     </Box>

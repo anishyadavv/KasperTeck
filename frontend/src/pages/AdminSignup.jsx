@@ -11,10 +11,12 @@ import Container from '@mui/material/Container';
 import { Link, useNavigate } from 'react-router-dom'
 import { FormHelperText } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import GlobalContext from '../context/GlobalContext';
 const defaultTheme = createTheme();
 
 const AdminSignup = ()=> {
+  const context = React.useContext(GlobalContext);
+  const {setUser} = context;
   const [error, setError] = React.useState(false);
   const [errorText, setErrorText] = React.useState();
   const navigate = useNavigate();
@@ -35,6 +37,10 @@ const AdminSignup = ()=> {
 
     const userData = await response.json();
     if(userData.success){
+      setUser({
+          email:email,
+          role:"admin"
+        })
         localStorage.setItem('token', userData.authtoken);
         navigate('/adminDashboard');
     }

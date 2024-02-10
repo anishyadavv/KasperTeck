@@ -11,7 +11,8 @@ import Alerts from './components/Alerts.jsx';
 import { useContext } from 'react';
 import GlobalContext from './context/GlobalContext.jsx';
 import CustomerDashboard from './pages/CustomerDashboard.jsx';
-
+import DevicePanel from './components/DevicePanel.jsx'
+import RoomPanel from './components/RoomPanel.jsx';
 
 function App() {
   const context = useContext(GlobalContext);
@@ -29,7 +30,10 @@ function App() {
           <Route path='/customerLogin' element={<CustomerLogin/>}></Route>
         </Route>
         <Route path='/adminDashboard' element={<AdminDashboard/>}/>
-        <Route path='/CustomerDashboard' element={<CustomerDashboard/>}/>
+        <Route path='/CustomerDashboard' element={<CustomerDashboard/>}>
+          <Route path="devices" element={<DevicePanel/>}/>
+          <Route path="rooms" element={<RoomPanel/>}/>
+        </Route>
       </Routes>
     </Router>
     </>

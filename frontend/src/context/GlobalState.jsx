@@ -4,12 +4,33 @@ import GlobalContext from "./GlobalContext";
 const GlobalState = (props) => {
   const [devices, setDevices] = useState([]);
   const [customers, setCustomers] = useState([]);
+  const [assignedDevices, setAssignedDevices] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [user, setUser] = useState({});
   const [deviceID, setDeviceID] = useState("");
   const [alert,setAlert] = useState({
     title:"",
     status:"",
     show: false,
   });
+
+   const getDevicesAssignedToCustomer = async() => {
+    try {
+      const response = await fetch('http://localhost:5000/api/customer/devices',{
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        },
+      });
+      const data = await response.json();
+      setAssignedDevices(data);
+    }
+    catch (err) {
+      console.log(err);
+    }
+   }
    const getDeviceData = async() => {
     try{
       const response = await fetch("http://localhost:5000/api/admin/devices",{
@@ -130,6 +151,71 @@ const GlobalState = (props) => {
             },2000)
     }
   }
+  const createRoom =async(userData)=>{
+    const {room_id,device_id,room_name} = userData;
+      try{
+    const response = await fetch("http://localhost:5000/api/customer/create-room", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token")
+          },
+          body: JSON.stringify({room_id,device_id,room_name}),
+        });
+
+        const data = await response.json();
+
+        if(data.success){
+          rooms.push(data.newRoom);
+          setAlert({
+                  title:"Room Created Successfully",
+                  status:"success",
+                  show:"true"
+                })
+                setTimeout(()=>{
+                  setAlert({...alert,show:false});
+                },2000)
+        }
+        else{
+          setAlert({
+            title:data.error,
+            status:"error",
+            show: true
+          })
+          setTimeout(()=>{
+                  setAlert({...alert,show:false});
+                },2000)
+        }
+      }
+      catch(error){
+        setAlert({
+        title:"Something went wrong",
+        status:"error",
+        show: true
+      })
+      setTimeout(()=>{
+              setAlert({...alert,show:false});
+            },2000)
+      }
+    }
+    
+    const getRooms = async()=>{
+       try{
+      const response = await fetch("http://localhost:5000/api/customer/rooms",{
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        },});
+      const data = await response.json();
+      setRooms(data);
+    }
+    catch(err){
+      console.log(err);
+    }
+    }
   const assignDevice = async(CustomerID,DeviceID,handleClose)=>{
     const device_id = DeviceID;
     const user_id = CustomerID;
@@ -210,6 +296,7 @@ const GlobalState = (props) => {
     }
     }
 
+
   return (
     <GlobalContext.Provider
     value={{
@@ -226,6 +313,15 @@ const GlobalState = (props) => {
       deviceID,
       setDeviceID,
       getCustomerDetails,
+      user,
+      setUser,
+      assignedDevices,
+      setAssignedDevices,
+      getDevicesAssignedToCustomer,
+      createRoom,
+      rooms,
+      setRooms,
+      getRooms
     }}>
       {props.children}
     </GlobalContext.Provider>

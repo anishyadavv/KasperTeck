@@ -11,10 +11,12 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'
-
+import GlobalContext from '../context/GlobalContext';
 const defaultTheme = createTheme();
 
 const CustomerLogin = ()=> {
+   const context = React.useContext(GlobalContext);
+  const {setUser} = context;
   const [error, setError] = React.useState(false);
   const [errorText, setErrorText] = React.useState();
   const navigate = useNavigate();
@@ -36,8 +38,12 @@ const CustomerLogin = ()=> {
 
     const userData = await response.json();
     if(userData.success){
+      setUser({
+          email:email,
+          role:"customer"
+        })
         localStorage.setItem('token', userData.authtoken);
-        navigate('/CustomerDashboard');
+        navigate('/CustomerDashboard/devices');
     }
     else{
         console.log(userData.error);
@@ -96,7 +102,7 @@ const CustomerLogin = ()=> {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Log in
             </Button>
           </Box>
         </Box>

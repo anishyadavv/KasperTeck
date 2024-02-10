@@ -7,12 +7,16 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link,useNavigate } from 'react-router-dom';
 import getLoggedin from '../helper/getLoggedin';
-
+import GlobalContext from '../context/GlobalContext';
 export default function NavBar() {
+    const context = React.useContext(GlobalContext);
+    const { setDevices,setCustomers, setAssignedDevices, setRooms, setUser,setDeviceID} = context;
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate("/");
+        setDevices([]);
+        setAssignedDevices([]);
+        navigate("/adminLogin");
     }
     const loggedIn = getLoggedin();
   return (
@@ -28,7 +32,7 @@ export default function NavBar() {
           >
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" style={{color:'white',textDecoration:'none'}}>Kasper Tech</Link>
+            <Link to="/adminLogin" style={{color:'white',textDecoration:'none'}}>Kasper Tech</Link>
           </Typography>
           <Button color="inherit" onClick={handleLogout}>{loggedIn?'Logout':''}</Button>
         </Toolbar>

@@ -11,10 +11,12 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'
-
+import GlobalContext from '../context/GlobalContext';
 const defaultTheme = createTheme();
 
 const AdminLogin = ()=> {
+  const context = React.useContext(GlobalContext);
+  const {setUser} = context;
   const [error, setError] = React.useState(false);
   const [errorText, setErrorText] = React.useState();
   const navigate = useNavigate();
@@ -35,7 +37,12 @@ const AdminLogin = ()=> {
     });
 
     const userData = await response.json();
+
     if(userData.success){
+        setUser({
+          email:email,
+          role:"admin"
+        })
         localStorage.setItem('token', userData.authtoken);
         navigate('/adminDashboard');
     }
@@ -96,7 +103,7 @@ const AdminLogin = ()=> {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Log in
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
