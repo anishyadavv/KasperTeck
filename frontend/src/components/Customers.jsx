@@ -32,7 +32,7 @@ export default function Customers({open,handleClose}) {
             </h2>
                 {customers && customers.map(customer =>{
                     return  (<ListItemButton key={customer._id} component="a" onClick={()=>assignDevice(customer._id,deviceID,handleClose)}>
-                                <ListItemText  primary={customer.email} secondary={`device id:${customer._id}`} />
+                                <ListItemText  primary={customer.email} secondary={`Customer id:${customer._id}`} />
                             </ListItemButton>)
                 })}
           </ModalContent>

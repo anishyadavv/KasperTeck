@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react"
+
 import GlobalContext from "../context/GlobalContext";
 import Device from "./Device";
 
@@ -9,8 +10,8 @@ const DevicePanel = () => {
         getDevicesAssignedToCustomer();
     },[]);
   return (
-    <div >
-      <h1>Devices assigned to you</h1>
+    <div style={{marginTop:"10px"}}>
+      <h3>Devices assigned to you</h3>
         {
             assignedDevices &&
             assignedDevices.map(device => <div

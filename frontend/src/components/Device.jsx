@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
 import GlobalContext from '../context/GlobalContext';
 
 export default function Device({id,device_id,state,alloted_to_user,setOpenCustomersModal,role}) {

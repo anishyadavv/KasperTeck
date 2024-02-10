@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+
 import Device from '../components/Device';
 import CreateDevice from '../components/CreateDevice';
 import RegisterCustomer from '../components/RegisterCustomer';
 import GlobalContext from '../context/GlobalContext';
 import Customers from '../components/Customers';
-import { useNavigate } from 'react-router-dom';
+
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const context = useContext(GlobalContext);
@@ -45,8 +48,8 @@ const AdminDashboard = () => {
      * show list of all devices
      * assign unallocated devices to customer
     **/
-    <div style={{padding:"30px 80px"}}>
-        <h1>Admin dashboard</h1>
+    <div style={{padding:"30px"}}>
+        <h2 style={{textAlign:'center'}}>Admin dashboard</h2>
         <div style={{display:'flex',justifyContent:'space-between',marginTop:'24px',flexWrap:'wrap'}}>
           <Button
             variant='contained'
@@ -67,7 +70,7 @@ const AdminDashboard = () => {
         handleClose={handleCloseRegisterCustomer}
         open={openRegisterCustomer}
         />
-        <div>
+        <div style={{marginTop:"20px"}}>
           {devices &&
             devices.map(device => {
               return <div

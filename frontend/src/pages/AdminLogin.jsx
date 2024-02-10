@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom'
+
 import GlobalContext from '../context/GlobalContext';
 const defaultTheme = createTheme();
 
@@ -116,7 +117,6 @@ const AdminLogin = ()=> {
         </Box>
       </Container>
     </ThemeProvider>
- 
   );
 }
 

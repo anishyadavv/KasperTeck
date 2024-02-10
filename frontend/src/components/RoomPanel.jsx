@@ -1,5 +1,6 @@
 import { useState,useEffect,useContext } from 'react';
 import Button from '@mui/material/Button';
+
 import CreateRoom from './CreateRoom';
 import GlobalContext from '../context/GlobalContext';
 import Room from './Room';
@@ -16,8 +17,8 @@ const RoomPanel = () => {
     },[rooms]);
   return (
     <div>
-        <div style={{display:'flex', justifyContent:'space-between'}}>
-            <h1>Rooms</h1>
+        <div style={{display:'flex', justifyContent:'space-between',alignItems:'center',marginTop:"10px"}}>
+            <h3>Rooms</h3>
             <Button onClick={()=>setOpen(true)} variant="outlined">Create Room</Button>
         </div>
         <CreateRoom

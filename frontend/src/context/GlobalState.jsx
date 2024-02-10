@@ -14,6 +14,7 @@ const GlobalState = (props) => {
     show: false,
   });
 
+  // get Devices assigned to the customer
    const getDevicesAssignedToCustomer = async() => {
     try {
       const response = await fetch('http://localhost:5000/api/customer/devices',{
@@ -31,6 +32,8 @@ const GlobalState = (props) => {
       console.log(err);
     }
    }
+
+   //get all devices
    const getDeviceData = async() => {
     try{
       const response = await fetch("http://localhost:5000/api/admin/devices",{
@@ -47,6 +50,8 @@ const GlobalState = (props) => {
       console.log(err);
     }
   }
+
+  // get All Customers
   const getCustomers = async() => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/customers",{
@@ -63,6 +68,8 @@ const GlobalState = (props) => {
       console.log(err);
     }
   }
+
+  // create new Device 
   const CreateDevice = async(device_id) => {
     try{
       const response = await fetch("http://localhost:5000/api/admin/create-device", {
@@ -104,6 +111,7 @@ const GlobalState = (props) => {
     }
   }
 
+  // create new Customer
   const RegisterCustomer = async(userData) =>{
     const {email, password} = userData;
     try{
@@ -151,6 +159,8 @@ const GlobalState = (props) => {
             },2000)
     }
   }
+
+  // create a new room
   const createRoom =async(userData)=>{
     const {room_id,device_id,room_name} = userData;
       try{
@@ -199,7 +209,8 @@ const GlobalState = (props) => {
             },2000)
       }
     }
-    
+
+    // get Rooms data
     const getRooms = async()=>{
        try{
       const response = await fetch("http://localhost:5000/api/customer/rooms",{
@@ -210,12 +221,16 @@ const GlobalState = (props) => {
           "auth-token": localStorage.getItem("token")
         },});
       const data = await response.json();
-      setRooms(data);
+      if(data){
+        setRooms(data);
+      }
     }
     catch(err){
       console.log(err);
     }
     }
+
+    // assign device to customers
   const assignDevice = async(CustomerID,DeviceID,handleClose)=>{
     const device_id = DeviceID;
     const user_id = CustomerID;
@@ -272,6 +287,8 @@ const GlobalState = (props) => {
     }
     handleClose();
   }
+
+  // get customer details
   const getCustomerDetails = async(user_id)=>{
     try{
       const response = await fetch("http://localhost:5000/api/admin/customer-details", {

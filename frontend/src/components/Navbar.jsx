@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link,useNavigate } from 'react-router-dom';
 import getLoggedin from '../helper/getLoggedin';
+
 import GlobalContext from '../context/GlobalContext';
 export default function NavBar() {
     const context = React.useContext(GlobalContext);
@@ -16,6 +17,7 @@ export default function NavBar() {
         localStorage.removeItem('token');
         setDevices([]);
         setAssignedDevices([]);
+        setRooms([]);
         navigate("/adminLogin");
     }
     const loggedIn = getLoggedin();

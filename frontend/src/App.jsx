@@ -1,14 +1,14 @@
 import './App.css'
+import { useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Navbar from '../src/components/Navbar.jsx';
 import Home from '../src/pages/HomePage.jsx';
 import AdminDashboard from '../src/pages/AdminDashboard.jsx';
-
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminSignup from './pages/AdminSignup.jsx';
 import CustomerLogin from './pages/CustomerLogin.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import Alerts from './components/Alerts.jsx';
-import { useContext } from 'react';
 import GlobalContext from './context/GlobalContext.jsx';
 import CustomerDashboard from './pages/CustomerDashboard.jsx';
 import DevicePanel from './components/DevicePanel.jsx'

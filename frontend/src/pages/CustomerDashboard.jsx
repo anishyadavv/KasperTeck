@@ -10,7 +10,7 @@ const CustomerDashboard = () => {
      */
     <div style={{padding:"30px 80px"}}>
         <div>
-            <h1>Customer Dashboard</h1>
+            <h2 style={{textAlign:"center"}}>Customer Dashboard</h2>
             <div style={{display:'flex',justifyContent:'center'}}>
             <ButtonGroup variant="contained" aria-label="Basic button group" style={{marginTop:"10px"}}>
                     <Link to="devices"><Button>Devices</Button></Link>
